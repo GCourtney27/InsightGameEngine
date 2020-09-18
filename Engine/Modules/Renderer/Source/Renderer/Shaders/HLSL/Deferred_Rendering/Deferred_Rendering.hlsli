@@ -1,5 +1,5 @@
-#include <../Common/Insight_Common.hlsli>
 #include <../Common/Lights_Common.hlsli>
+
 #define MAX_PER_OBJECT_LOD 9
 
 cbuffer cbPerObject : register(b0)

@@ -1,3 +1,4 @@
+#include <../Common/Insight_Common.hlsli>
 #include <..//Deferred_Rendering/Deferred_Rendering.hlsli>
 
 // Texture Inputs
@@ -10,7 +11,9 @@ Texture2D t_SceneDepthGBuffer : register(t4);
 
 Texture2D t_ShadowDepthPass : register(t10);
 
-Texture2D t_LightPassResult : register(t15);
+Texture2D t_BloomPassResult : register(t15);
+
+RWTexture2D<float4> rw_FinalImage : register(u1);
 
 // Samplers
 // --------
@@ -32,11 +35,10 @@ struct PS_INPUT_POSTFX
     float2 texCoords : TEXCOORD;
 };
 
-float4 main(PS_INPUT_POSTFX ps_in) : SV_TARGET
+void main(PS_INPUT_POSTFX ps_in)
 {
-    float3 LightPassResult = t_LightPassResult.Sample(s_PointClampSampler, ps_in.texCoords).rgb;
-    
-    float3 result = LightPassResult;
+    float2 uvs = GetPixelCoords(ps_in.texCoords, cbScreenSize);
+    float3 result = rw_FinalImage.Load(int3(uvs, 0.0)).rgb;
     
     if (vnEnabled)
     {
@@ -51,7 +53,7 @@ float4 main(PS_INPUT_POSTFX ps_in) : SV_TARGET
         result = AddChromaticAberration(result, ps_in.texCoords);
     }
     
-    return float4(result, 1.0);
+    rw_FinalImage[uvs] = float4(result, 1.0);
 }
 
 float mod(float x, float y)
@@ -70,9 +72,9 @@ float3 AddChromaticAberration(float3 sourceColor, float2 texCoords)
     float2 uvB = texCoords + texel.xy * precompute;
     
     // TODO: this effect overwrites other effects because it adds the color texture directly. Fix it
-    sourceColor.r = t_LightPassResult.Sample(s_LinearWrapSampler, uvR).r;
-    sourceColor.g = t_LightPassResult.Sample(s_LinearWrapSampler, texCoords).g;
-    sourceColor.b = t_LightPassResult.Sample(s_LinearWrapSampler, uvB).b;
+    //sourceColor.r = t_LightPassResult.Sample(s_LinearWrapSampler, uvR).r;
+    //sourceColor.g = t_LightPassResult.Sample(s_LinearWrapSampler, texCoords).g;
+    //sourceColor.b = t_LightPassResult.Sample(s_LinearWrapSampler, uvB).b;
     
     return sourceColor;
 }

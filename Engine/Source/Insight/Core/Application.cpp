@@ -119,14 +119,14 @@ namespace Insight {
 			m_pGameLayer->Render();
 
 			// Render Editor UI
-			IE_STRIP_FOR_GAME_DIST(
+			/*IE_STRIP_FOR_GAME_DIST(
 				m_pImGuiLayer->Begin();
 				for (Layer* Layer : m_LayerStack) {
 					Layer->OnImGuiRender();
 				}
 				m_pGameLayer->OnImGuiRender();
 				m_pImGuiLayer->End();
-			);
+			);*/
 
 			m_pWindow->EndFrame();
 		}
@@ -170,7 +170,7 @@ namespace Insight {
 		}
 		case Renderer::eTargetRenderAPI::D3D_12:
 		{
-			IE_STRIP_FOR_GAME_DIST(m_pImGuiLayer = new D3D12ImGuiLayer());
+			//IE_STRIP_FOR_GAME_DIST(m_pImGuiLayer = new D3D12ImGuiLayer());
 			break;
 		}
 #endif
@@ -182,7 +182,7 @@ namespace Insight {
 		}
 
 		IE_STRIP_FOR_GAME_DIST(m_pEditorLayer = new EditorLayer());
-		IE_STRIP_FOR_GAME_DIST(PushOverlay(m_pImGuiLayer);)
+		//IE_STRIP_FOR_GAME_DIST(PushOverlay(m_pImGuiLayer);)
 		IE_STRIP_FOR_GAME_DIST(PushOverlay(m_pEditorLayer);)
 	}
 

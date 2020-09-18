@@ -1,4 +1,3 @@
-#include <../Common/Insight_Common.hlsli>
 // This header includes all functions necessary 
 // for Physically Based Rendering in the Pixel Shader 
 

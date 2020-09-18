@@ -46,18 +46,18 @@ namespace Insight {
 			if (Input::IsMouseButtonPressed(IE_MOUSEBUTTON_MIDDLE)) {
 
 				auto [x, y] = Input::GetRawMousePosition();
-
+				float SpeedMultiplier = 4.0f;
 				if (x < 0.0f) {
-					ProcessKeyboardInput(CameraMovement::LEFT, DeltaMs);
+					ProcessKeyboardInput(CameraMovement::LEFT, DeltaMs * SpeedMultiplier);
 				}
 				if (x > 0.0f) {
-					ProcessKeyboardInput(CameraMovement::RIGHT, DeltaMs);
+					ProcessKeyboardInput(CameraMovement::RIGHT, DeltaMs * SpeedMultiplier);
 				}
 				if (y < 0.0f) {
-					ProcessKeyboardInput(CameraMovement::UP, DeltaMs);
+					ProcessKeyboardInput(CameraMovement::UP, DeltaMs * SpeedMultiplier);
 				}
 				if (y > 0.0f) {
-					ProcessKeyboardInput(CameraMovement::DOWN, DeltaMs);
+					ProcessKeyboardInput(CameraMovement::DOWN, DeltaMs * SpeedMultiplier);
 				}
 			}
 

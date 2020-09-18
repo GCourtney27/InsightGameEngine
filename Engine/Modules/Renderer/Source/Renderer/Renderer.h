@@ -19,7 +19,7 @@
 	Set a vertex buffers for rendering - Renderer::SetVertexBuffers(0, 1, ieVertexBuffer);
 */
 
-#define RETURN_IF_WINDOW_NOT_VISIBLE if (!m_WindowVisible){ return;}
+#define RETURN_IF_WINDOW_NOT_VISIBLE if (!m_WindowVisible) { return; }
 
 
 namespace Insight {

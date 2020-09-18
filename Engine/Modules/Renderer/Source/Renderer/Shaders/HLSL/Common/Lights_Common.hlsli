@@ -1,8 +1,7 @@
-#include <../Common/Insight_Common.hlsli>
 
 /*
-    This file includes all lights that are able to be rendered inside a pixel shader
-    * Note: Constant Buffers must be 16 byte aligned, edit with caution
+    This file includes all lights that are able to be rendered inside a pixel shader.
+    * Note: Constant Buffers must be 16 byte aligned, edit with caution.
 */
 
 // If max supported lights is changed here it must also be changed inside <Insight/Core.h>

@@ -1,4 +1,3 @@
-#include <../Common/Insight_Common.hlsli>
 #include <../Common/Lights_Common.hlsli>
 
 cbuffer cbPerObject : register(b0)

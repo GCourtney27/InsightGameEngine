@@ -319,10 +319,16 @@ namespace Insight {
 		resDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 		resDesc.MipLevels = 1;
 		resDesc.SampleDesc.Count = 1;
-		ThrowIfFailed(m_pDeviceRef->CreateCommittedResource(
-			&NvidiaHelpers::kDefaultHeapProps, D3D12_HEAP_FLAG_NONE, &resDesc,
-			D3D12_RESOURCE_STATE_COPY_SOURCE, nullptr,
-			IID_PPV_ARGS(&m_pOutputBuffer_UAV)), "Failed to create raytracing outptut buffer.");
+		HRESULT hr =
+			m_pDeviceRef->CreateCommittedResource(
+				&NvidiaHelpers::kDefaultHeapProps, 
+				D3D12_HEAP_FLAG_NONE, 
+				&resDesc,
+				D3D12_RESOURCE_STATE_COPY_SOURCE, 
+				nullptr,
+				IID_PPV_ARGS(&m_pOutputBuffer_UAV)
+			);
+		ThrowIfFailed(hr, "Failed to create raytracing outptut buffer.");
 	}
 
 	void RayTraceHelpers::CreateShaderBindingTable()

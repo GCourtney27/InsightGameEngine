@@ -453,7 +453,7 @@ namespace Insight {
 		m_Data.hGraphicsVisualizeSubMenu = &m_hGraphicsVisualizeSubMenu;
 		m_Data.pWindow = this;
 
-		m_nCmdShowArgs = SW_SHOWMAXIMIZED;
+		//m_nCmdShowArgs = SW_SHOWMAXIMIZED;
 
 		::ShowWindow(m_hWindow, m_nCmdShowArgs);
 		::SetForegroundWindow(m_hWindow);

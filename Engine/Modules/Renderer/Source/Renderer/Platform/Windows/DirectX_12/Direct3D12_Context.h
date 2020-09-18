@@ -195,13 +195,15 @@ namespace Insight {
 		// 2: (R)Roughness/(G)Metallic/(B)AO
 		// 3: World Position
 		// -----Post-Fx Pass-----
-		// 4: Light Pass result
+		// 4: Bloom
 		CDescriptorHeapWrapper				m_rtvHeap;
 		// Number of decriptors depends on frame buffer count. Start slot is 0.
 		CDescriptorHeapWrapper				m_SwapChainRTVHeap;
 		//0:  SceneDepth
 		//1:  ShadowDepth
 		CDescriptorHeapWrapper				m_dsvHeap;
+
+		ComPtr<ID3D12Resource>				m_pFinalImage_UAV;
 
 		ComPtr<ID3D12Resource>				m_pSceneDepthStencilTexture;
 		ComPtr<ID3D12Resource>				m_pShadowDepthTexture;
@@ -223,19 +225,20 @@ namespace Insight {
 		//2:   SRV-(R)Roughness/(G)Metallic/(B)AO(RTV->SRV)
 		//3:   SRV-Position(RTV->SRV)
 		//4:   SRV-Scene Depth(DSV->SRV)
-		//5:   SRV-Light Pass Result(RTV->SRV)
-		//6:   UAV-Ray Trace Output(RTHelper UAV(COPY)->SRV)
-		//7:   SRV-Shadow Depth(DSV->SRV)
+		//5:   SRV-Bloom Pass Result(RTV->SRV)
+		//6:   UAV-Final Image
+		//7:   UAV-Ray Trace Output(RTHelper UAV(COPY)->SRV)
+		//8:   SRV-Shadow Depth(DSV->SRV)
 		//-----PerObject-----
-		//8:   SRV-Albedo(SRV)
-		//9:   SRV-Normal(SRV)
-		//10:  SRV-Roughness(SRV)
-		//11:  SRV-Metallic(SRV)
-		//12:  SRV-AO(SRV)
-		//13:  SRV-Sky Irradiance(SRV)
-		//14:  SRV-Sky Environment(SRV)
-		//15:  SRV-Sky BRDF LUT(SRV)
-		//15:  SRV-Sky Diffuse(SRV)
+		//9:   SRV-Albedo(SRV)
+		//10:  SRV-Normal(SRV)
+		//11:  SRV-Roughness(SRV)
+		//12:  SRV-Metallic(SRV)
+		//13:  SRV-AO(SRV)
+		//14:  SRV-Sky Irradiance(SRV)
+		//15:  SRV-Sky Environment(SRV)
+		//16:  SRV-Sky BRDF LUT(SRV)
+		//17:  SRV-Sky Diffuse(SRV)
 		CDescriptorHeapWrapper				m_cbvsrvHeap;
 
 
