@@ -21,7 +21,6 @@ workspace ("InsightEngine")
 		"Release-Package",
 		"Dist-Package",
 	}
-	
 
 outputdir = "%{cfg.buildcfg}-$(SDKIdentifier)-$(Platform)"
 

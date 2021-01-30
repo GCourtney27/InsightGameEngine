@@ -31,6 +31,7 @@ project (projectName)
 	
 	targetdir (rootDirPath .. binaryDirectory .. "%{prj.name}")
     objdir (rootDirPath .. intDirectory .. "%{prj.name}")
+	debugdir ("%{cfg.targetdir}")
 
 	files
 	{

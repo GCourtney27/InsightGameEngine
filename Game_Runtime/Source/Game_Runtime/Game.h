@@ -5,8 +5,8 @@
 class GAME_API InsightGame : public Insight::IGame
 {
 public:
-	InsightGame() {}
-	virtual ~InsightGame() {}
+	InsightGame();
+	virtual ~InsightGame();
 
 	virtual void OnAppUpdate() override
 	{
@@ -17,6 +17,7 @@ public:
 
 
 	virtual Insight::ModuleLoadStatus GetLoadStatus();
+protected:
 
 };
 

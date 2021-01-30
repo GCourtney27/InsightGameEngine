@@ -2,6 +2,8 @@
 
 //#include <Insight/Core.h>
 //#include "Insight/Runtime/Archetypes/ACamera.h"
+#include "Insight/Core/Scene/Scene.h"
+
 #include "Insight/Runtime/Game_Framework/Game_Core.h"
 
 
@@ -14,7 +16,6 @@ namespace Insight
 		Success = 1,
 		Waiting = 2,
 	};
-	//using namespace Runtime;
 
 	class GAME_API IGame
 	{
@@ -22,8 +23,7 @@ namespace Insight
 	protected:
 		IGame() 
 		{
-			//constexpr bool d = IE_PLATFORM_BUILD_UWP
-			//std::enable_if<IE_DEBUG == 1, Scene> i;
+			//m_pScene = new Scene();
 		}
 		virtual ~IGame() {}
 		
@@ -55,8 +55,7 @@ namespace Insight
 		static inline bool CheckLoadSuccess(const ModuleLoadStatus& Status) { return Status == ModuleLoadStatus::Success; }
 
 	protected:
-		//ACamera* m_Camera;
-		//Scene m_Scene;
+		Scene* m_pScene;
 		// TODO ECS::World m_World
 	};
 }

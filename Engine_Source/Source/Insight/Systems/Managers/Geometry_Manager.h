@@ -6,12 +6,11 @@
 
 namespace Insight {
 
-	using namespace Microsoft::WRL;
 
 	class INSIGHT_API GeometryManager
 	{
 	public:
-		typedef std::vector<StrongModelPtr> SceneModels;
+		typedef std::vector<std::shared_ptr<Model>> SceneModels;
 		typedef uint64_t VertexBufferHandle;
 		typedef uint64_t IndexBufferHandle;
 		friend class D3D12GeometryManager;

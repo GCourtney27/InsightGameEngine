@@ -17,11 +17,11 @@ namespace Insight {
 
 		ieTransform& GetTransformRef() { return m_Transform; }
 		const ieTransform& GetTransform() const { return m_Transform; }
-		void AddChild(unique_ptr<MeshNode> child);
+		void AddChild(std::unique_ptr<MeshNode> child);
 		int GetNumChildren() { return (int)m_MeshChildren.size(); }
 
 	private:
-		std::vector<unique_ptr<MeshNode>> m_Children;
+		std::vector<std::unique_ptr<MeshNode>> m_Children;
 		std::vector<Mesh*> m_MeshChildren;
 		ieTransform m_Transform;
 		std::string m_DisplayName;

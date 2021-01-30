@@ -21,7 +21,7 @@ namespace Insight {
 	typedef shared_ptr<Runtime::ActorComponent> StrongActorComponentPtr;
 	typedef unique_ptr<Runtime::ActorComponent> UniqueActorComponentPtr;
 	typedef weak_ptr<Runtime::ActorComponent> WeakActorComponentPtr;
-	typedef shared_ptr<Model> StrongModelPtr;
+	typedef std::shared_ptr<Model> StrongModelPtr;
 	typedef weak_ptr<Model> WeakModelPtr;
 	typedef shared_ptr<Texture> StrongTexturePtr;
 	typedef weak_ptr<Texture> WeakTexturePtr;

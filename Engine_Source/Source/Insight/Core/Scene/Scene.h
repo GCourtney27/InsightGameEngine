@@ -3,7 +3,6 @@
 #include <Insight/Core.h>
 
 #include "Insight/Systems/Managers/Resource_Manager.h"
-#include "Insight/Runtime/Archetypes/ACamera.h"
 
 
 namespace Insight {
@@ -11,6 +10,7 @@ namespace Insight {
 	namespace Runtime {
 		class APlayerCharacter;
 		class APlayerStart;
+		class ACamera;
 	}
 
 	class SceneNode;

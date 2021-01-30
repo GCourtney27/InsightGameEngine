@@ -3,6 +3,7 @@
 
 #include "Application.h"
 
+#include "Game_Runtime/Game.h"
 #include "Insight/Runtime/AActor.h"
 #include "Insight/Core/ie_Exception.h"
 #include "Insight/Rendering/Renderer.h"
@@ -19,8 +20,9 @@
 #define EDITOR_UI_ENABLED 0
 #endif
 
-#include "Game_Runtime/Game.h"
 #include <imgui.h>
+
+
 // TODO: Make the project hot swapable
 // TODO: Make sample projects
 // Scenes (Development-Project)
@@ -38,7 +40,7 @@ namespace Insight {
 	{
 		IE_ASSERT(!s_Instance, "Trying to create Application instance when one already exists!");
 		s_Instance = this;
-
+		m_pGame = nullptr;
 
 		// Initialize the core logger.
 		IE_STRIP_FOR_GAME_DIST(
@@ -287,7 +289,6 @@ namespace Insight {
 		PushOverlay(m_pPerfOverlay);
 	}
 
-	static HMODULE GameModule = NULL;
 	bool Application::LoadGame()
 	{
 		bool Succeeded = false;
@@ -303,10 +304,13 @@ namespace Insight {
 		
 		*/
 
+		static HMODULE GameModule = NULL;
+		const char* CopyStagingDirCmd = "xcopy /q /c /y \"../Game_Runtime/Staging\" \"../Game_Runtime\"";
+
 		static bool Initialized = false;
 		if (!Initialized)
 		{
-			system("xcopy /q /c /y \"../Game_Runtime/Staging\" \"../Game_Runtime\"");
+			system(CopyStagingDirCmd);
 			Initialized = true;
 		}
 
@@ -316,7 +320,7 @@ namespace Insight {
 		sprintf_s(SymbolBuffer, "?CreateGameInstance@@YAPEAXXZ");
 		typedef void* (*OutVoidPInVoidMethod_t)();
 
-		// Assemble the path to the game runtime dll
+		// Assemble the path to the game runtime dll.
 		std::wstringstream ss;
 		ss << FileSystem::GetWorkingDirectoryW();
 		ss << "../Game_Runtime/Game_Runtime.dll";
@@ -324,27 +328,20 @@ namespace Insight {
 		// Load the Dll.
 		if (GameModule)
 		{
+			// Free the lbrary if it already exists
 			FreeLibrary(GameModule);
 			GameModule = NULL;
-
-			// Steps that must be done in order.
-			// 1. Compile the new library
-			// 2. Free the oly library from memeory with FreeLibrary
-			// 3. Copy and paste the new library raplaceing the old one
-			// 4. Load the library again with LoadLibraryExW
-
-			system("xcopy /q /c /y \"../Game_Runtime/Staging\" \"../Game_Runtime\"");
-
-
-			//"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv" %~dp0..\..\Engine_Source\InsightEngine.sln /build Debug /project %~dp0..\..\Game_Runtime\Game_Runtime.vcxproj /projectconfig Debug
-			//system("\"C:\\Program Files(x86)\\Microsoft Visual Studio\\2019\\Enterprise\\Common7\\IDE\\devenv\" ..\\..\\..\\Game_Runtime\\Game_Runtime.vcxproj /build");
-			//system("copy ../Game_Runtime/Game_Runtime.dll ../Application_Win32/");
+			
+			// Copy the copy the new game from staging to the active directory.
+			system(CopyStagingDirCmd);
 		}
 		GameModule = LoadLibraryExW(ss.str().c_str(), NULL, NULL);
 		if (GameModule)
 		{
 			// Create the game.
 			OutVoidPInVoidMethod_t GameFactory = (OutVoidPInVoidMethod_t)GetProcAddress(GameModule, SymbolBuffer);
+			// Might be a hot reload, free the game.
+			if (m_pGame) delete m_pGame;
 			m_pGame = static_cast<IGame*>(GameFactory());
 		}
 		
